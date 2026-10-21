@@ -1,0 +1,222 @@
+{
+  "version_esquema": "1.0.0",
+  "version_datos": "0.2.0",
+  "generado_en": "2026-10-21T12:00:00Z",
+  "platillos": [
+    {
+      "id": "mx-taco-al-pastor",
+      "nombre": "Taco al pastor",
+      "nombres_alternos": [{ "texto": "taco de trompo", "pais": "MX" }],
+      "pais": "MX",
+      "region": "Ciudad de México",
+      "categoria": "antojito",
+      "descripcion": "Taco de cerdo marinado con achiote, tortilla de maíz, piña, cebolla y cilantro.",
+      "ingredientes_principales": ["cerdo", "tortilla de maiz", "pina", "cebolla", "cilantro"],
+      "alergenos": [],
+      "etiquetas": ["sin_gluten_naturalmente"],
+      "porcion": {
+        "descripcion": "1 taco estándar con tortilla de maíz",
+        "cantidad": 1,
+        "unidad": "pieza",
+        "gramos": 100,
+        "estado": "preparado"
+      },
+      "nutricion": {
+        "kcal": { "min": 130, "tipico": 160, "max": 200 },
+        "proteina_g": { "min": 7, "tipico": 9, "max": 12 },
+        "grasa_g": { "min": 5, "tipico": 7, "max": 11 },
+        "carbohidratos_g": { "min": 14, "tipico": 16, "max": 20 },
+        "sodio_mg": { "min": 200, "tipico": 300, "max": 450 }
+      },
+      "metodo": "calculado_de_receta",
+      "confianza": "media",
+      "fuentes": [{ "tipo": "receta_calculada", "nombre": "SMAE / Base de Datos ZG Group" }],
+      "revision": { "estado": "borrador" },
+      "ultima_actualizacion": "2026-10-21",
+      "activo": false
+    },
+    {
+      "id": "mx-pozole-rojo",
+      "nombre": "Pozole rojo con cerdo",
+      "nombres_alternos": [{ "texto": "pozole", "pais": "MX" }],
+      "pais": "MX",
+      "region": "Jalisco / Centro de México",
+      "categoria": "sopa_caldo",
+      "descripcion": "Caldo tradicional con maíz pozolero cacahuazintle y carne de cerdo deshebrada.",
+      "ingredientes_principales": ["maiz pozolero", "cerdo", "chile guajillo", "lechuga", "rabanos"],
+      "alergenos": [],
+      "etiquetas": ["sin_gluten_naturalmente"],
+      "porcion": {
+        "descripcion": "1 plato hondo estándar",
+        "cantidad": 1,
+        "unidad": "plato",
+        "gramos": 350,
+        "estado": "cocido"
+      },
+      "nutricion": {
+        "kcal": { "min": 280, "tipico": 350, "max": 440 },
+        "proteina_g": { "min": 18, "tipico": 22, "max": 28 },
+        "grasa_g": { "min": 10, "tipico": 14, "max": 20 },
+        "carbohidratos_g": { "min": 30, "tipico": 36, "max": 45 },
+        "sodio_mg": { "min": 600, "tipico": 850, "max": 1100 }
+      },
+      "metodo": "calculado_de_receta",
+      "confianza": "baja",
+      "fuentes": [{ "tipo": "receta_calculada", "nombre": "INCMNSZ / SMAE" }],
+      "revision": { "estado": "borrador" },
+      "ultima_actualizacion": "2026-10-21",
+      "activo": false
+    },
+    {
+      "id": "mx-chilaquiles-verdes",
+      "nombre": "Chilaquiles verdes con pollo",
+      "nombres_alternos": [{ "texto": "chilaquiles", "pais": "MX" }],
+      "pais": "MX",
+      "categoria": "desayuno",
+      "descripcion": "Totopos de tortilla fritos bañados en salsa verde, crema, queso fresco y pollo deshebrado.",
+      "ingredientes_principales": ["tortilla de maiz", "pollo", "crema", "queso", "tomatillo"],
+      "alergenos": ["lacteos"],
+      "etiquetas": ["sin_gluten_naturalmente"],
+      "porcion": {
+        "descripcion": "1 porción regular en plato",
+        "cantidad": 1,
+        "unidad": "plato",
+        "gramos": 250,
+        "estado": "preparado"
+      },
+      "nutricion": {
+        "kcal": { "min": 380, "tipico": 460, "max": 560 },
+        "proteina_g": { "min": 20, "tipico": 25, "max": 32 },
+        "grasa_g": { "min": 18, "tipico": 24, "max": 32 },
+        "carbohidratos_g": { "min": 35, "tipico": 42, "max": 50 }
+      },
+      "metodo": "calculado_de_receta",
+      "confianza": "media",
+      "fuentes": [{ "tipo": "receta_calculada", "nombre": "SMAE México" }],
+      "revision": { "estado": "borrador" },
+      "ultima_actualizacion": "2026-10-21",
+      "activo": false
+    },
+    {
+      "id": "mx-tamal-verde",
+      "nombre": "Tamal verde con pollo",
+      "nombres_alternos": [{ "texto": "tamal de pollo", "pais": "MX" }],
+      "pais": "MX",
+      "categoria": "desayuno",
+      "descripcion": "Masa de maíz rellena de pollo con salsa verde, envuelta y cocida en hoja de maíz.",
+      "ingredientes_principales": ["masa de maiz", "manteca de cerdo", "pollo", "salsa verde"],
+      "alergenos": [],
+      "etiquetas": ["sin_gluten_naturalmente"],
+      "porcion": {
+        "descripcion": "1 pieza mediana",
+        "cantidad": 1,
+        "unidad": "pieza",
+        "gramos": 150,
+        "estado": "cocido"
+      },
+      "nutricion": {
+        "kcal": { "min": 280, "tipico": 340, "max": 410 },
+        "proteina_g": { "min": 8, "tipico": 11, "max": 15 },
+        "grasa_g": { "min": 12, "tipico": 16, "max": 22 },
+        "carbohidratos_g": { "min": 35, "tipico": 40, "max": 48 }
+      },
+      "metodo": "calculado_de_receta",
+      "confianza": "media",
+      "fuentes": [{ "tipo": "receta_calculada", "nombre": "SMAE" }],
+      "revision": { "estado": "borrador" },
+      "ultima_actualizacion": "2026-10-21",
+      "activo": false
+    },
+    {
+      "id": "co-bandeja-paisa",
+      "nombre": "Bandeja paisa",
+      "nombres_alternos": [{ "texto": "bandeja antioqueña", "pais": "CO" }],
+      "pais": "CO",
+      "region": "Antioquia",
+      "categoria": "plato_fuerte",
+      "descripcion": "Plato típico con frijoles, arroz, carne molida, chicharrón, chorizo, huevo frito, plátano maduro, arepa y aguacate.",
+      "ingredientes_principales": ["frijoles", "arroz", "carne de res", "chicharrón", "huevo", "arepa", "aguacate"],
+      "alergenos": ["huevo"],
+      "etiquetas": ["alto_en_carbohidratos", "alto_en_grasa"],
+      "porcion": {
+        "descripcion": "1 bandeja completa tradicional",
+        "cantidad": 1,
+        "unidad": "plato",
+        "gramos": 600,
+        "estado": "preparado"
+      },
+      "nutricion": {
+        "kcal": { "min": 950, "tipico": 1150, "max": 1400 },
+        "proteina_g": { "min": 35, "tipico": 45, "max": 58 },
+        "grasa_g": { "min": 45, "tipico": 60, "max": 78 },
+        "carbohidratos_g": { "min": 90, "tipico": 110, "max": 135 }
+      },
+      "metodo": "calculado_de_receta",
+      "confianza": "baja",
+      "fuentes": [{ "tipo": "receta_calculada", "nombre": "ICBF Colombia" }],
+      "revision": { "estado": "borrador" },
+      "ultima_actualizacion": "2026-10-21",
+      "activo": false
+    },
+    {
+      "id": "co-arepa-con-queso",
+      "nombre": "Arepa con queso",
+      "nombres_alternos": [{ "texto": "arepa rellena", "pais": "CO" }],
+      "pais": "CO",
+      "categoria": "desayuno",
+      "descripcion": "Arepa de maíz blanca o amarilla rellena de queso fresco, asada a la plancha.",
+      "ingredientes_principales": ["harina de maiz", "queso", "mantequilla"],
+      "alergenos": ["lacteos"],
+      "etiquetas": ["sin_gluten_naturalmente"],
+      "porcion": {
+        "descripcion": "1 pieza mediana",
+        "cantidad": 1,
+        "unidad": "pieza",
+        "gramos": 120,
+        "estado": "preparado"
+      },
+      "nutricion": {
+        "kcal": { "min": 230, "tipico": 270, "max": 330 },
+        "proteina_g": { "min": 8, "tipico": 9, "max": 12 },
+        "grasa_g": { "min": 8, "tipico": 11, "max": 15 },
+        "carbohidratos_g": { "min": 28, "tipico": 32, "max": 38 }
+      },
+      "metodo": "calculado_de_receta",
+      "confianza": "media",
+      "fuentes": [{ "tipo": "receta_calculada", "nombre": "ICBF" }],
+      "revision": { "estado": "borrador" },
+      "ultima_actualizacion": "2026-10-21",
+      "activo": false
+    },
+    {
+      "id": "ar-empanada-de-carne-horno",
+      "nombre": "Empanada de carne al horno",
+      "nombres_alternos": [{ "texto": "empanada criolla", "pais": "AR" }],
+      "pais": "AR",
+      "categoria": "snack",
+      "descripcion": "Empanada rellena de carne vacuna picada, cebolla, huevo duro y especias, cocida al horno.",
+      "ingredientes_principales": ["harina de trigo", "carne vacuna", "cebolla", "huevo"],
+      "alergenos": ["gluten", "huevo"],
+      "etiquetas": [],
+      "porcion": {
+        "descripcion": "1 pieza al horno",
+        "cantidad": 1,
+        "unidad": "pieza",
+        "gramos": 90,
+        "estado": "preparado"
+      },
+      "nutricion": {
+        "kcal": { "min": 200, "tipico": 230, "max": 290 },
+        "proteina_g": { "min": 6, "tipico": 8, "max": 10 },
+        "grasa_g": { "min": 9, "tipico": 12, "max": 16 },
+        "carbohidratos_g": { "min": 18, "tipico": 22, "max": 26 }
+      },
+      "metodo": "calculado_de_receta",
+      "confianza": "media",
+      "fuentes": [{ "tipo": "receta_calculada", "nombre": "Argenfoods" }],
+      "revision": { "estado": "borrador" },
+      "ultima_actualizacion": "2026-10-21",
+      "activo": false
+    }
+  ]
+}
