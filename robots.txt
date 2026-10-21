@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zg-group.com.mx/sitemap.xml
+Sitemap: calculadora-nutricional-two.vercel.app/sitemap.xml
