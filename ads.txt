@@ -1,0 +1,2 @@
+# Sustituye por tu ID real de AdSense cuando Google lo apruebe
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
