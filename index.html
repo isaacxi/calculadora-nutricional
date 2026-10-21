@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZG Group - Calculadora Nutricional / Calórica | Requerimientos y Macros</title>
+  <meta name="description" content="Calcula tus calorías diarias, TMB y distribución de macronutrientes de forma precisa y segura con ZG Group.">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+
+  <!-- Header / Nav -->
+  <header class="bg-emerald-900 text-white py-4 shadow-md">
+    <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <h1 class="text-xl font-bold tracking-tight">ZG Group - Calculadora Nutricional</h1>
+      </div>
+      <span class="text-xs bg-emerald-800 text-emerald-200 px-2.5 py-1 rounded-full font-medium">v1.2.0</span>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-5xl mx-auto px-4 py-8 w-full flex-grow space-y-8">
+    
+    <!-- Hero / Título -->
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Calculadora y Registro Calórico Diario</h2>
+      <p class="text-slate-600 mt-2">Calcula tus requerimientos, filtra platillos por país y arma tus tiempos de comida (Desayuno, Comida, Cena).</p>
+    </div>
+
+    <!-- Contenedor Principal (Formulario y Resultados) -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+      
+      <!-- Formulario de Entrada -->
+      <div class="md:col-span-7 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <form id="calcForm" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1">Género</label>
+              <select id="genero" class="w-full rounded-lg border border-slate-300 p-2.5 outline-none focus:ring-2 focus:ring-emerald-600">
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1">Edad (años)</label>
+              <input type="number" id="edad" required placeholder="30" class="w-full rounded-lg border border-slate-300 p-2.5 outline-none focus:ring-2 focus:ring-emerald-600">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1">Peso (kg)</label>
+              <input type="number" id="peso" step="0.1" required placeholder="75" class="w-full rounded-lg border border-slate-300 p-2.5 outline-none focus:ring-2 focus:ring-emerald-600">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1">Estatura (cm)</label>
+              <input type="number" id="estatura" required placeholder="175" class="w-full rounded-lg border border-slate-300 p-2.5 outline-none focus:ring-2 focus:ring-emerald-600">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Nivel de Actividad Física</label>
+            <select id="actividad" class="w-full rounded-lg border border-slate-300 p-2.5 outline-none focus:ring-2 focus:ring-emerald-600">
+              <option value="1.2">Sedentario (Poco o ningún ejercicio)</option>
+              <option value="1.375">Ligeramente activo (1-3 días/sem)</option>
+              <option value="1.55" selected>Moderadamente activo (3-5 días/sem)</option>
+              <option value="1.725">Muy activo (6-7 días/sem)</option>
+              <option value="1.9">Atleta / Hiperactivo</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Objetivo Nutricional</label>
+            <select id="objetivo" class="w-full rounded-lg border border-slate-300 p-2.5 outline-none focus:ring-2 focus:ring-emerald-600">
+              <option value="deficit">Déficit Calórico (Pérdida de grasa)</option>
+              <option value="mantenimiento" selected>Mantenimiento (Recomposición)</option>
+              <option value="superavit">Superávit Calórico (Ganancia muscular)</option>
+            </select>
+          </div>
+
+          <!-- Filtros de Seguridad YMYL -->
+          <div class="border-t border-slate-200 pt-4 space-y-2">
+            <p class="text-xs font-bold text-slate-700 uppercase tracking-wider">Filtros de Seguridad Clínica</p>
+            <div class="grid grid-cols-2 gap-2 text-xs text-slate-600">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="condEmbarazo" class="rounded text-emerald-600"> Embarazo o lactancia
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="condDiabetes" class="rounded text-emerald-600"> Diabetes Mellitus
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="condRenal" class="rounded text-emerald-600"> Enfermedad Renal / Hepática
+              </label>
+            </div>
+          </div>
+
+          <p id="perfilGuardado" class="hidden text-xs text-emerald-800 bg-emerald-50 p-2 rounded-lg">Perfil recuperado de este dispositivo. Edita los datos y calcula para actualizarlo. <button type="button" id="borrarPerfil" class="underline font-semibold">Borrar mis datos</button></p>
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 mt-4">
+            Calcular Requerimientos
+          </button>
+        </form>
+      </div>
+
+      <!-- Tarjeta de Resultados -->
+      <div class="md:col-span-5 space-y-4">
+        <div id="resultCard" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hidden space-y-4">
+          <div>
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Meta Diaria Estimada</h3>
+            <div class="text-3xl font-extrabold text-emerald-600 mb-2" id="caloriasTotal">0 kcal</div>
+            
+            <div class="text-xs text-slate-500 space-y-1 bg-slate-50 p-3 rounded-lg border border-slate-100">
+              <p>Tasa Metabólica Basal (TMB): <span id="resTmb" class="font-semibold text-slate-700">0</span> kcal</p>
+              <p>Gasto Energético Total (GETD): <span id="resGetd" class="font-semibold text-slate-700">0</span> kcal</p>
+              <p>Índice de Masa Corporal (IMC): <span id="resImc" class="font-semibold text-slate-700">0</span></p>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-100 pt-4">
+            <p class="font-bold text-slate-700 text-xs uppercase tracking-wide mb-3">Distribución de Macronutrientes</p>
+            <div class="grid grid-cols-3 gap-2 text-center text-xs mb-3">
+              <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-100">
+                <span class="block font-bold text-blue-700 text-base" id="macroProt">0g</span>
+                <span class="text-slate-500 font-medium">Proteína</span>
+              </div>
+              <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-100">
+                <span class="block font-bold text-amber-700 text-base" id="macroGrasa">0g</span>
+                <span class="text-slate-500 font-medium">Grasas</span>
+              </div>
+              <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
+                <span class="block font-bold text-emerald-700 text-base" id="macroCarb">0g</span>
+                <span class="text-slate-500 font-medium">Carbohidratos</span>
+              </div>
+            </div>
+
+            <!-- Gráfica SVG -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-[10px] text-slate-400 font-semibold">
+                <span id="labelPorcProt">Prot: 0%</span>
+                <span id="labelPorcGrasa">Grasas: 0%</span>
+                <span id="labelPorcCarb">Carbs: 0%</span>
+              </div>
+              <svg class="w-full h-4 rounded-full overflow-hidden bg-slate-100 flex" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <rect id="svgBarProt" x="0" y="0" width="0" height="10" fill="#3b82f6" />
+                <rect id="svgBarGrasa" x="0" y="0" width="0" height="10" fill="#f59e0b" />
+                <rect id="svgBarCarb" x="0" y="0" width="0" height="10" fill="#10b981" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Error Clínico -->
+        <div id="errorCard" class="bg-red-50 border border-red-200 p-6 rounded-2xl text-red-700 text-sm hidden">
+          <p class="font-bold mb-1">Aviso de Seguridad Clínica:</p>
+          <p id="errorText"></p>
+        </div>
+
+        <!-- Placeholder Inicial -->
+        <div id="placeholderCard" class="bg-slate-100/70 border-2 border-dashed border-slate-200 p-8 rounded-2xl text-center text-slate-400">
+          <p class="text-sm">Completa el formulario y calcula tus requerimientos para activar el diario de alimentos y la comparativa.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÓDULO DE REGISTRO DIARIO (DIARIO DE ALIMENTOS Y MACROS) -->
+    <section id="seccionDiario" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6 hidden">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b pb-4">
+        <div>
+          <h3 class="text-2xl font-bold text-slate-900">Diario de Alimentos y Balance Nutricional</h3>
+          <p class="text-sm text-slate-600">Registra tus alimentos y monitorea en tiempo real tu consumo de calorías y macronutrientes.</p>
+        </div>
+        <!-- Resumen de Comparativa de Calorías -->
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center gap-6 w-full md:w-auto">
+          <div>
+            <p class="text-xs text-emerald-700 font-semibold uppercase">Total Consumido</p>
+            <p class="text-2xl font-black text-emerald-800" id="totalConsumido">0 kcal</p>
+          </div>
+          <div class="border-l border-emerald-300 pl-4">
+            <p class="text-xs text-slate-600 font-semibold uppercase">Meta Calculada</p>
+            <p class="text-2xl font-black text-slate-800" id="metaComparativa">0 kcal</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-2">
+        <div class="flex justify-between text-sm font-semibold text-slate-800"><span>Calorías (consumido / meta)</span><span id="txtKcal">0 / 0 kcal</span></div>
+        <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden"><div id="barKcal" class="bg-emerald-600 h-3 rounded-full transition-all duration-300" style="width:0%"></div></div>
+        <p id="difKcal" class="text-xs text-slate-600"></p>
+      </div>
+      <!-- COMPARATIVA VISUAL DE MACRONUTRIENTES (META VS CONSUMIDO) -->
+      <div class="bg-slate-50 border border-slate-200 p-4 sm:p-5 rounded-xl space-y-4">
+        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider">Progreso de Macronutrientes (Consumido / Meta)</h4>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-semibold">
+          <!-- Proteína -->
+          <div class="space-y-1 bg-white p-3 rounded-lg border border-slate-200">
+            <div class="flex justify-between text-slate-700">
+              <span>🔵 Proteína</span>
+              <span id="txtMacroProt">0g / 0g</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+              <div id="barMacroProt" class="bg-blue-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Grasas -->
+          <div class="space-y-1 bg-white p-3 rounded-lg border border-slate-200">
+            <div class="flex justify-between text-slate-700">
+              <span>🟡 Grasas</span>
+              <span id="txtMacroGrasa">0g / 0g</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+              <div id="barMacroGrasa" class="bg-amber-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Carbohidratos -->
+          <div class="space-y-1 bg-white p-3 rounded-lg border border-slate-200">
+            <div class="flex justify-between text-slate-700">
+              <span>🟢 Carbohidratos</span>
+              <span id="txtMacroCarb">0g / 0g</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+              <div id="barMacroCarb" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenedor de Comidas Registradas -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Desayuno -->
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h4 class="font-bold text-slate-800 text-base">☀️ Desayuno</h4>
+              <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded" id="kcalDesayuno">0 kcal</span>
+            </div>
+            <ul id="listaDesayuno" class="space-y-2 text-xs text-slate-600 min-h-[60px]">
+              <li class="text-slate-400 italic">No hay alimentos agregados.</li>
+            </ul>
+          </div>
+          <button onclick="limpiarComida('desayuno')" class="mt-4 text-xs text-red-600 hover:underline text-left font-semibold">Vaciar desayuno</button>
+        </div>
+
+        <!-- Comida -->
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h4 class="font-bold text-slate-800 text-base">🍽️ Comida</h4>
+              <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded" id="kcalComida">0 kcal</span>
+            </div>
+            <ul id="listaComida" class="space-y-2 text-xs text-slate-600 min-h-[60px]">
+              <li class="text-slate-400 italic">No hay alimentos agregados.</li>
+            </ul>
+          </div>
+          <button onclick="limpiarComida('comida')" class="mt-4 text-xs text-red-600 hover:underline text-left font-semibold">Vaciar comida</button>
+        </div>
+
+        <!-- Cena -->
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h4 class="font-bold text-slate-800 text-base">🌙 Cena</h4>
+              <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded" id="kcalCena">0 kcal</span>
+            </div>
+            <ul id="listaCena" class="space-y-2 text-xs text-slate-600 min-h-[60px]">
+              <li class="text-slate-400 italic">No hay alimentos agregados.</li>
+            </ul>
+          </div>
+          <button onclick="limpiarComida('cena')" class="mt-4 text-xs text-red-600 hover:underline text-left font-semibold">Vaciar cena</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATÁLOGO DE PLATILLOS CON FILTRO POR PAÍS -->
+    <section id="seccionCatalogo" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h3 class="text-2xl font-bold text-slate-900">Catálogo de alimentos, platillos y bebidas</h3>
+          <p class="text-sm text-slate-600">Filtra por país o busca un platillo específico para agregarlo a tu día.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+          <!-- Filtro por País -->
+          <select id="filtroPais" class="rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-600">
+            <option value="TODOS">🌍 Todos los Países</option>
+            <option value="MX">🇲🇽 México</option>
+            <option value="CO">🇨🇴 Colombia</option>
+            <option value="AR">🇦🇷 Argentina</option>
+            <option value="ES">🇪🇸 España</option>
+            <option value="PE">🇵🇪 Perú</option>
+          </select>
+          <!-- Buscador por texto -->
+          <input type="text" id="busquedaPlatillo" placeholder="Buscar platillo..." class="rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-600 w-full sm:w-60">
+        </div>
+      </div>
+
+      <div id="chipsGrupo" class="flex flex-wrap gap-2" role="group" aria-label="Grupos de alimentos"></div>
+      <p id="conteoCatalogo" class="text-xs text-slate-500" aria-live="polite"></p>
+      <!-- Grid de Platillos con tarjetas de ancho cómodo y legible -->
+      <div id="listaPlatillos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Se rellena con JS -->
+      </div>
+    </section>
+
+  </main>
+
+<!-- Footer Legal -->
+  <footer class="bg-white border-t border-slate-200 py-8 mt-12">
+    <div class="max-w-5xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
+      <p>Herramienta estrictamente informativa y educativa. No sustituye la consulta médica o nutricional profesional.</p>
+      <p>
+        © 2026 ZG Group - Calculadora Nutricional / Calórica. 
+        | <a href="legal/aviso-de-privacidad.html" class="text-emerald-700 underline font-semibold hover:text-emerald-900">Aviso de Privacidad y Términos Médicos</a>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
