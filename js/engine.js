@@ -1,6 +1,6 @@
 /**
  * ZG Group - Calculadora Nutricional / Calórica
- * Motor de Cálculo y Reglas de Seguridad (v1.0.0)
+ * Motor de Cálculo y Reglas de Seguridad (v1.1.0)
  */
 
 export function calcularRequerimientos(datos) {
@@ -34,6 +34,10 @@ export function calcularRequerimientos(datos) {
     return { error: "Tu IMC indica bajo peso. No es médicamente recomendable aplicar un déficit calórico." };
   }
 
+  if (imc >= 40) {
+    return { error: "Con un IMC de 40 o más el plan alimentario debe indicarlo un profesional de la salud. Esta herramienta no lo calcula." };
+  }
+
   // 2. Cálculo de Tasa Metabólica Basal (TMB) - Ecuación de Mifflin-St Jeor (1990)
   let tmb = (10 * peso) + (6.25 * estatura) - (5 * edad);
   tmb = genero === 'hombre' ? tmb + 5 : tmb - 161;
@@ -58,24 +62,19 @@ export function calcularRequerimientos(datos) {
     caloriasObjetivo = tmb; // Nunca sugerir por debajo de la TMB por defecto
   }
 
-  // 6. Algoritmo de Reparto de Macronutrientes (Proteínas, Grasas, Carbohidratos)
-  // Proteína ajustada por kg de peso (máximo 2.0g/kg para evitar cifras desproporcionadas)
-  let factorProteina = objetivo === 'deficit' ? 2.0 : 1.8;
-  let proteinasGramos = Math.min(peso * factorProteina, peso * 2.2);
-  
-  // Grasas: el mayor entre 0.9g/kg o el 20% de las calorías totales
-  let grasasGramos = Math.max(peso * 0.9, (caloriasObjetivo * 0.20) / 9);
-
-  // Carbohidratos: calorías remanentes / 4
-  let caloriasRestantes = caloriasObjetivo - ((proteinasGramos * 4) + (grasasGramos * 9));
-  let carbohidratosGramos = caloriasRestantes / 4;
-
-  // Mecanismo de Fallback si los carbohidratos salen muy bajos (< 100g)
-  if (carbohidratosGramos < 100) {
-    proteinasGramos = peso * 1.5; // Ajuste al rango inferior seguro
-    grasasGramos = (caloriasObjetivo * 0.25) / 9;
-    carbohidratosGramos = (caloriasObjetivo - ((proteinasGramos * 4) + (grasasGramos * 9))) / 4;
-  }
+  // 6. Reparto de macronutrientes con base en evidencia
+  // Proteína: RDA 0.8 g/kg (IOM) como piso; 1.4-2.0 g/kg en personas que se ejercitan (ISSN, 2017).
+  // Todo se limita a los rangos AMDR del IOM (% de kcal): proteína 10-35, grasa 20-35, carbohidratos 45-65.
+  let factorProteina = actividad <= 1.2 ? 1.0 : (actividad <= 1.375 ? 1.2 : 1.6);
+  if (objetivo === 'deficit') factorProteina = Math.min(factorProteina + 0.2, 2.0);
+  const pPct = Math.min(Math.max((peso * factorProteina * 4) / caloriasObjetivo, 0.10), 0.35);
+  let gPct = 0.25;
+  let cPct = 1 - pPct - gPct;
+  if (cPct < 0.45) { gPct = 0.20; cPct = 1 - pPct - gPct; }
+  if (cPct > 0.65) { gPct = 1 - pPct - 0.65; cPct = 0.65; }
+  const proteinasGramos = (caloriasObjetivo * pPct) / 4;
+  const grasasGramos = (caloriasObjetivo * gPct) / 9;
+  const carbohidratosGramos = (caloriasObjetivo * cPct) / 4;
 
   // 7. Redondeo final a decenas y enteros (Evita falsa precisión)
   return {
